@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,23 +23,13 @@ public class MainCityScreen : ScreenBase
         base.OnLoadSuccess();
         mCtrl = mCtrlBase as MainCityCtrl;
 
-        mCtrl.btnGuild.onClick.AddListener (OnGuildClick);
-        mCtrl.btnTask.onClick.AddListener(OnTaskClick);
-
         mCtrl.txtLv.text = 20.ToString();
+        mCtrl.Attribute.onClick.AddListener(OnclickAtteibute);
     }
 
-    /// <summary>
-    /// 点击了公会按钮
-    /// </summary>
-    void OnGuildClick()
+    private void OnclickAtteibute()
     {
-        GameUIManager.GetInstance().OpenUI(typeof(GuildScreen));
-    }
-
-    void OnTaskClick()
-    {
-        GameUIManager.GetInstance().OpenUI(typeof(TaskScreen));
+        GameUIManager.GetInstance().OpenUI(typeof(AttributeScreen));
     }
 
     protected override void UIAdapt(Vector2Int res)

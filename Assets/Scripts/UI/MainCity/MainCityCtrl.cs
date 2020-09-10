@@ -3,7 +3,6 @@
 public class MainCityCtrl : UICtrlBase
 {
     public Text txtLv;// 等级
-
-    public Button btnGuild;// 公会按钮
-    public Button btnTask;// 任务按钮
+    public Image Icon;// 头像
+    public Button Attribute;// 属性
 }
