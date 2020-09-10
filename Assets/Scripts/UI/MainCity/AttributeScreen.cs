@@ -20,6 +20,7 @@ public class AttributeScreen : ScreenBase
     protected override void OnLoadSuccess()
     {
         base.OnLoadSuccess();
+        mCtrl = mCtrlBase as AttributeCtrl;
         mCtrl.CloseButton.onClick.AddListener(OnCloseClick);
     }
 
