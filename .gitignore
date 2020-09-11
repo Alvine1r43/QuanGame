@@ -3,3 +3,4 @@
 *.sln
 Library/
 Temp/
+obj/
