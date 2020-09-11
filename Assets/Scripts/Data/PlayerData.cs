@@ -15,26 +15,4 @@ public class PlayerData
         return instance;
     }
 
-    /// <summary>
-    /// 是否拥有公会
-    /// </summary>
-    /// <returns></returns>
-
-    bool mBHasGuild = false;
-    public bool HaveGuild()
-    {
-        return mBHasGuild;
-    }
-
-    /// <summary>
-    /// 设置是否拥有公会
-    /// </summary>
-    /// <param name="bHaveGuild"></param>
-    public void SetHaveGuild(bool bHaveGuild)
-    {
-        mBHasGuild = bHaveGuild;
-        EventManager.OnGuildCreated.BroadCastEvent(mBHasGuild);
-    }
-
-
 }

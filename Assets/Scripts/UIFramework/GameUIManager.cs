@@ -13,7 +13,7 @@ public class GameUIManager : MonoSingleton<GameUIManager>
     }
 
     // UI列表缓存
-    static Dictionary<Type, ScreenBase> mTypeScreens = new Dictionary<Type, ScreenBase>();
+    public static Dictionary<Type, ScreenBase> mTypeScreens = new Dictionary<Type, ScreenBase>();
 
     public int mUIOpenOrder = 0;// UI打开时的Order值 用来标识界面层级顺序
     // uicamera
@@ -22,14 +22,17 @@ public class GameUIManager : MonoSingleton<GameUIManager>
 
     // 预制分辨率
     static Vector2Int ScreenResolution = new Vector2Int(1024,768);
-    void Update()
-    {
-        if (ScreenResolution.x != Screen.width || ScreenResolution.y != Screen.height)
-        {
-            ScreenResolution = new Vector2Int(Screen.width, Screen.height);
-            EventManager.ScreenResolutionEvt.BroadCastEvent(ScreenResolution);
-        }
-    }
+
+    //void Update()
+    //{   
+
+        //这段代码是实时监控分辨率改变的代码 暂时注释
+        //if (ScreenResolution.x != Screen.width || ScreenResolution.y != Screen.height)
+        //{
+        //    ScreenResolution = new Vector2Int(Screen.width, Screen.height);
+        //    EventManager.ScreenResolutionEvt.BroadCastEvent(ScreenResolution);
+        //}
+    //}
 
 
     protected override void Init()
