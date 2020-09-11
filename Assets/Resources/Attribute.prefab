@@ -397,11 +397,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ctrlCanvas: {fileID: 0}
-  m_referenceResolution: {x: 1136, y: 640}
+  m_referenceResolution: {x: 1024, y: 768}
   sceenPriority: 20
-  m_UseMask: 0
+  m_UseMask: 1
   mAlwaysShow: 0
   mHideOtherScreenWhenThisOnTop: 0
   mBCareAboutMoney: 0
   MoneyType: 
   CloseButton: {fileID: 8504580765660750949}
+  Des: {fileID: 7766264034507837862}

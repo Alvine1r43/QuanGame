@@ -3,4 +3,5 @@
 public class AttributeCtrl : UICtrlBase
 {
     public Button CloseButton;
+    public Text Des;
 }

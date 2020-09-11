@@ -29,7 +29,11 @@ public class MainCityScreen : ScreenBase
 
     private void OnclickAtteibute()
     {
-        GameUIManager.GetInstance().OpenUI(typeof(AttributeScreen));
+        var param = new AttributeParam
+        {
+            Des = "您的幸运值:MAX"
+        };
+        GameUIManager.GetInstance().OpenUI(typeof(AttributeScreen), param);
     }
 
     protected override void UIAdapt(Vector2Int res)
