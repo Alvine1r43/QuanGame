@@ -79,7 +79,6 @@ public class MonoSingleton<T> : MonoBehaviour where T : Component
         }
 
         DontDestroyOnLoad(gameObject);
-
         Init();
     }
 

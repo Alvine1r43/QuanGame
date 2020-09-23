@@ -47,6 +47,8 @@ public class GameUIManager : MonoSingleton<GameUIManager>
 
         Canvas canvas = poolRoot.AddComponent<Canvas>();
         canvas.enabled = false;
+
+
     }
 
     /// <summary>

@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MainCameraManager : MonoSingleton<MainCameraManager>
 {
@@ -8,6 +10,7 @@ public class MainCameraManager : MonoSingleton<MainCameraManager>
     Camera mainCamera;
     public Camera MainCamera { get => mainCamera; }
 
+    public Transform m_CameraTrans;
     /// <summary>
     /// 是否激活鼠标控制拖拽和缩进功能
     /// </summary>
@@ -17,6 +20,17 @@ public class MainCameraManager : MonoSingleton<MainCameraManager>
     /// 平行投影
     /// </summary>
     bool m_Orthographic;
+
+    /// <summary>
+    /// 拖动速度
+    /// </summary>
+    float m_DragSpeed;
+
+
+    /// <summary>
+    /// 拖动速度系数
+    /// </summary>
+    const float m_DragSpeedCoefficient = 2.0f;
 
     /// <summary>
     /// 缩放系数
@@ -49,6 +63,8 @@ public class MainCameraManager : MonoSingleton<MainCameraManager>
     const float SpringBackOrthSizeSpeed = 10.0f;
     const float DefaultUISize = 10.5f;
 
+
+
     /// <summary>
     /// Z值
     /// </summary>
@@ -61,10 +77,22 @@ public class MainCameraManager : MonoSingleton<MainCameraManager>
         mainCamera = gameObject.GetComponent<Camera>();
         m_Orthographic = mainCamera.orthographic; //是否平行投影
         m_Y = DefaultD * Mathf.Sin(Pitch * Mathf.Deg2Rad);
-
+        m_CameraTrans = MainCamera.transform;
+        m_DragSpeed = CalcDragSpeed();
     }
 
-
+    /// <summary>
+    /// 获取拖动速度
+    /// </summary>
+    /// <returns></returns>
+    private float CalcDragSpeed()
+    {
+        if (m_Orthographic)
+        {
+            return MainCamera.orthographicSize / Screen.height;
+        }
+        return Mathf.Abs(m_Y) * Mathf.Tan(Mathf.Deg2Rad * MainCamera.fieldOfView * 0.5f) * 2.0f / Screen.height;
+    }
 
 
     /// <summary>
@@ -138,6 +166,11 @@ public class MainCameraManager : MonoSingleton<MainCameraManager>
         //    SetLookDistance(d);
         //}
     }
-
+    public void Drag(PointerEventData obj)
+    {   
+        var m_DragDelta = new Vector3(-obj.delta.x, -obj.delta.y, 0);
+        m_CameraTrans.SetPositionAndRotation((m_CameraTrans.position+m_DragDelta * m_DragSpeed * m_DragSpeedCoefficient), MainCamera.transform.rotation);
+        //m_CameraTrans.localPosition += m_DragDelta * m_DragSpeed * m_DragSpeedCoefficient;
+    }
 
 }

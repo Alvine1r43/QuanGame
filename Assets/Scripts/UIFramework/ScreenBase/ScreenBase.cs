@@ -28,7 +28,7 @@ public class ScreenBase
     }
 
     // 资源加载完成
-    void PanelLoadComplete(GameObject ao)
+    protected void PanelLoadComplete(GameObject ao)
     {
         mPanelRoot = Object.Instantiate(ao, GameUIManager.GetInstance().GetUIRootTransform());
         // 获取控件对象

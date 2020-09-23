@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using static UnityEngine.EventSystems.EventTrigger;
 
 //自定义事件类，继承Unity内置事件
 public class DoubleFingerEvent : UnityEvent<float> { } //Unity内置双指事件
 public class ZoomEvent : UnityEvent<bool> { } //unity内置事件
 
 
-public class InputManager : MonoSingleton<InputManager>, IPointerEnterHandler,
+public class InputManager :    MonoBehaviour, IPointerEnterHandler,
                                IPointerExitHandler,
                                IPointerDownHandler,
                                IPointerUpHandler,
@@ -34,12 +35,23 @@ public class InputManager : MonoSingleton<InputManager>, IPointerEnterHandler,
 #endif
 
 
-    // 自定义事件
+    /// <summary>
+    /// 放缩事件
+    /// </summary>
     public DoubleFingerEvent OnContinuousZoomEvent { get; } = new DoubleFingerEvent(); 
-    public ZoomEvent OnDiscreteZoomEvent { get; } = new ZoomEvent();
 
+    /// <summary>
+    /// 拖动事件
+    /// </summary>
+    public TriggerEvent OnDragEvent { get; } = new TriggerEvent();
+
+    /// <summary>
+    /// 放缩停止事件
+    /// </summary>
     public UnityEvent OnEndContinuousZoomEvent { get; } = new UnityEvent();
 
+
+    //下面这些方法，都是Unity内置的监听，是因为这个类实现了一些UI方面的接口，所以必须实现
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -48,7 +60,13 @@ public class InputManager : MonoSingleton<InputManager>, IPointerEnterHandler,
 
     public void OnDrag(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+
+        if (zooming_)
+            return;
+
+        OnDragEvent.Invoke(eventData);
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -57,7 +75,8 @@ public class InputManager : MonoSingleton<InputManager>, IPointerEnterHandler,
     }
 
     public void OnMove(AxisEventData eventData)
-    {
+    {   
+
         throw new System.NotImplementedException();
     }
 
@@ -114,17 +133,6 @@ public class InputManager : MonoSingleton<InputManager>, IPointerEnterHandler,
                 var distance_delta = touch_distance_ - current_distance;
                 touch_distance_ = current_distance;
                 OnContinuousZoomEvent.Invoke(distance_delta);
-
-                if (current_distance > zoom_distance_ + ZoomSensitivity)
-                {
-                    zoom_distance_ = current_distance;
-                    OnDiscreteZoomEvent.Invoke(true);
-                }
-                else if (current_distance < zoom_distance_ - ZoomSensitivity)
-                {
-                    zoom_distance_ = current_distance;
-                    OnDiscreteZoomEvent.Invoke(false);
-                }
             }
 
         }
@@ -150,19 +158,6 @@ public class InputManager : MonoSingleton<InputManager>, IPointerEnterHandler,
                 OnEndContinuousZoomEvent.Invoke();
                 zooming_ = false;
             }
-        }
-
-        mouse_scroll_difference_ += Input.mouseScrollDelta.y;
-        if (mouse_scroll_difference_ > 1)
-        {
-            mouse_scroll_difference_ = 0;
-            OnDiscreteZoomEvent.Invoke(true);
-
-        }
-        else if (mouse_scroll_difference_ < -1)
-        {
-            mouse_scroll_difference_ = 0;
-            OnDiscreteZoomEvent.Invoke(false);
         }
 #endif
 
