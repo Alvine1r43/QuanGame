@@ -57,7 +57,7 @@ public class MainCameraManager : MonoSingleton<MainCameraManager>
     /// OrthographicSize Range
     /// </summary>
     const float DefaultOrthSize = 15.0f;
-    const float MinOrthSize0 = 5;
+    const float MinOrthSize0 = 1;
     const float MinOrthSize = 6;
     const float MaxOrthSize = 19f;
     const float SpringBackOrthSizeSpeed = 10.0f;
@@ -160,12 +160,14 @@ public class MainCameraManager : MonoSingleton<MainCameraManager>
             var s = GetOrthSize() + obj * OrthSizeFactor;
             SetOrthSize(s);
         }
-        //else
-        //{
-        //    var d = GetLookDistance() + obj * ZoomFactor;
-        //    SetLookDistance(d);
-        //}
+        else
+        {
+            var d = MainCamera.transform.position.z + obj * ZoomFactor;
+            MainCamera.transform.SetPositionAndRotation(new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y,d), new Quaternion());
+        }
     }
+
+
     public void Drag(PointerEventData obj)
     {   
         var m_DragDelta = new Vector3(-obj.delta.x, -obj.delta.y, 0);
