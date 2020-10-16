@@ -26,6 +26,17 @@ public class SwordController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_Animator.SetFloat("RandomIdle", (float)GetRandomNumber(0, 1));
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            m_Animator.SetTrigger("AttackDown");
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            m_Animator.SetTrigger("AttackUp");
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            m_Animator.SetTrigger("Defense");
+        }
     }
 }
