@@ -28,7 +28,7 @@ public class SwordController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            m_Animator.SetTrigger("AttackDown");
+            m_Animator.SetTrigger("Attack");
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
